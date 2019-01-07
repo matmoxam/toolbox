@@ -1,0 +1,18 @@
+# This is a generic systemd service file for creating linux services for Centos etc
+# Place file at: /etc/systemd/system/generic.service
+# Reload the system services: systemctl daemon-reload
+
+[Unit]
+Description = Generic Service Description
+After = network.target
+
+[Service]
+PIDFile = /run/sitename/generic.pid
+User = generic
+Group = generic
+WorkingDirectory = /home/generic
+ExecStart = /bin/generic --address 0.0.0.0 --accept-hosts '.*'
+
+
+[Install]
+WantedBy = multi-user.target
