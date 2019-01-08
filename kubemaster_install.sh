@@ -2,7 +2,7 @@
 swapoff -a
 
 # Install docker
-yum -y install docker, net-tools, nano
+yum -y install docker net-tools nano
 systemctl enable docker
 systemctl start docker
 
