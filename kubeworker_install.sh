@@ -19,6 +19,9 @@ EOF
 
 # Turn off SELINUX
 setenforce 0
+sed 's/^SELINUX=enforcing.*/SELINUX=permissive/g' /etc/selinux/config > config
+mv -f config /etc/selinux/config
+rm config
 
 # Install kubernetes binaries
 yum install -y kubelet kubeadm kubectl
@@ -34,6 +37,5 @@ EOF
 sysctl --system
 
 # Manaully make the following changes
-echo "Edit /etc/fstab and comment out the line that causes swap. Example #/root/swap"
-echo "Edit /etc/selinux/config and change SELINUX=enforcing to SELINUX=permissive"
+echo "nano /etc/fstab and comment out the line that causes swap. Example #/root/swap"
 echo "Run the Kubectl join command issued by the master to attach this node to the cluster"
