@@ -6,3 +6,6 @@ docker rmi -f $(docker images -q)
 
 # Run docker image
 docker run --rm -d -p 8000:8000/tcp reponame:imagetag
+
+# Show logs of container
+docker logs container-id
