@@ -1,0 +1,4 @@
+# Join a node to a cluster by getting the join command from the master
+sudo kubeadm token create --print-join-command
+# output will be something like:
+kubeadm join 192.168.x.xx:6443 --token ad8dya9dau8ud9 --discovery-token-ca-cert-hash sha256:87a908d7d807d908d7a90ad7ad80n7n0ad78n0ad8d
