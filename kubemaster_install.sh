@@ -2,6 +2,9 @@
 systemctl stop firewalld
 systemctl disable firewalld
 
+# Add hostname to local dns
+echo "127.0.0.1" $HOSTNAME >> /etc/hosts
+
 # Turn off swap
 swapoff -a
 
