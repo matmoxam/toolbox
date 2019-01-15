@@ -1,3 +1,7 @@
+# Turn off firewall
+systemctl stop firewalld
+systemctl disable firewalld
+
 # Turn off swap
 swapoff -a
 
