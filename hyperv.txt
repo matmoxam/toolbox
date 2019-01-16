@@ -1,0 +1,4 @@
+# Let IP address for centos show up in hyper v
+yum install hyperv-daemons
+systemctl enable hypervvssd
+systemctl enable hypervkvpd
