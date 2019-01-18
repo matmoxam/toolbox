@@ -119,15 +119,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik-web-ui
+  name: privchats-svc
   namespace: privchats-system
 spec:
   selector:
-    k8s-app: traefik-ingress-lb
+    app: privchats
   ports:
   - name: web
     port: 80
-    targetPort: 8080
+    targetPort: 80
 ---
 
 apiVersion: extensions/v1beta1
