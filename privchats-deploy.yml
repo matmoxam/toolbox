@@ -32,7 +32,7 @@ data:
 
     server {
           listen         80;
-          server_name    127.0.0.1;
+          server_name    privchats.test;
           return         301 localhost$request_uri;
     }
 
