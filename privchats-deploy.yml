@@ -91,6 +91,8 @@ spec:
         - name: privchats-nginx-config
           configMap:
             name: privchats-nginx-config-map
+        - name: static
+          emptyDir: {}
       containers:
       - name: nginx
         image: nginx:latest
@@ -100,6 +102,8 @@ spec:
         - name: privchats-nginx-config
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
+        - name: static
+          mountPath: /static
       - name: redis
         image: redis:alpine
         ports:
@@ -107,6 +111,9 @@ spec:
       - name: privchats
         image: mmoxam/inringame:privchats-latest
         imagePullPolicy: Always
+        volumeMounts:        
+        - name: static
+          mountPath: /app/static
         ports:
         - containerPort: 8000
 ---
