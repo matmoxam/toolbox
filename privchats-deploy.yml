@@ -113,7 +113,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: isKubernetes
-        value: "True"    
+          value: "True"    
         ports:
         - containerPort: 8000
         volumeMounts:
