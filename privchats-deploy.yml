@@ -113,9 +113,12 @@ spec:
         imagePullPolicy: Always
         volumeMounts:        
         - name: static
-          mountPath: /app/static
+          mountPath: /static
         ports:
         - containerPort: 8000
+        postStart:
+          exec:
+            command: ["cp", "/app/static", "/static"]
 ---
 
 apiVersion: v1
