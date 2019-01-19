@@ -106,6 +106,7 @@ spec:
         - containerPort: 6379
       - name: privchats
         image: mmoxam/inringame:privchats-latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
 ---
