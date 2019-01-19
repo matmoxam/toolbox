@@ -116,9 +116,10 @@ spec:
           mountPath: /static
         ports:
         - containerPort: 8000
-        postStart:
-          exec:
-            command: ["cp", "/app/static", "/static"]
+        lifecycle:
+          postStart:
+            exec:
+              command: ["cp", "/app/static", "/static"]
 ---
 
 apiVersion: v1
