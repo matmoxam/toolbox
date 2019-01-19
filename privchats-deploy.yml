@@ -133,8 +133,7 @@ metadata:
   namespace: privchats-system
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/preserve-host: "true"
-    ingress.kubernetes.io/allowed-hosts: 192.168.1.2, 172.28.225.209, 172.28.225.209, 172.28.225.221
+    traefik.ingress.kubernetes.io/preserve-host: "true"    
 spec:
   rules:
   - host: privchats.test
