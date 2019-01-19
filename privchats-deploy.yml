@@ -119,7 +119,7 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["cp", "/app/static", "/static"]
+              command: ["cp", "-a", "/app/static/.", "/static/"]
 ---
 
 apiVersion: v1
