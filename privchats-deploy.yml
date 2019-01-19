@@ -130,9 +130,10 @@ metadata:
   name: privchats-ingress
   namespace: privchats-system
   annotations:
-    traefik.ingress.kubernetes.io/ingress.class: "traefik"
+    kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/preserve-host: "true"
     traefik.ingress.kubernetes.io/affinity: "true"
+    traefik.frontend.passHostHeader: "true"
 spec:
   rules:
   - host: privchats.test
