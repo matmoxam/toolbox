@@ -115,6 +115,8 @@ kind: Service
 metadata:
   name: privchats-svc
   namespace: privchats-system
+  annotations:
+    traefik.ingress.kubernetes.io/affinity: "true"
 spec:
   selector:
     app: privchats
@@ -132,8 +134,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/preserve-host: "true"
-    traefik.ingress.kubernetes.io/affinity: "true"
-    traefik.frontend.passHostHeader: "true"
+    ingress.kubernetes.io/allowed-hosts: 192.168.1.178
 spec:
   rules:
   - host: privchats.test
