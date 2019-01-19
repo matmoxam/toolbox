@@ -110,7 +110,10 @@ spec:
         - containerPort: 6379
       - name: privchats
         image: mmoxam/inringame:privchats-latest
-        imagePullPolicy: Always        
+        imagePullPolicy: Always
+        env:
+        - name: isKubernetes
+        value: "True"    
         ports:
         - containerPort: 8000
         volumeMounts:
