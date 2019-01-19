@@ -110,12 +110,12 @@ spec:
         - containerPort: 6379
       - name: privchats
         image: mmoxam/inringame:privchats-latest
-        imagePullPolicy: Always
-        volumeMounts:        
-        - name: static
-          mountPath: /static
+        imagePullPolicy: Always        
         ports:
         - containerPort: 8000
+        volumeMounts:
+        - name: static
+          mountPath: /static
         lifecycle:
           postStart:
             exec:
