@@ -71,7 +71,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: privchats-deployment
+  name: privchats
   namespace: privchats-system
   labels:
     app: privchats
