@@ -159,6 +159,7 @@ spec:
           serviceName: privchats-svc
           servicePort: 80
   tls:
-  - hosts:
-    - privchats.test
-    secretName: privchats-test-cert
+    - secretName: privchats-test-cert
+      hosts:
+        - privchats.test
+    
