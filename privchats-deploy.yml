@@ -95,11 +95,7 @@ spec:
           emptyDir: {}
       containers:
       - name: nginx
-        image: nginx:latest
-        args:
-        - --defaultentrypoints=http,https
-        - --entrypoints=Name:https Address::443 TLS
-        - --entrypoints=Name:http Address::80
+        image: nginx:latest        
         ports:
         - containerPort: 80
         volumeMounts:
