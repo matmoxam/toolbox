@@ -1,1 +1,2 @@
-Code needs to be simple, have a clear purpose, be uncluttered, and be well documented. This makes the process of peer review straightforward and it sets an environment for strong security principles to flourish.
+Code needs to be simple, have a clear purpose, be uncluttered, and be well documented. 
+This makes the process of peer review straightforward and it sets an environment for strong security principles to flourish.
