@@ -1,9 +1,15 @@
+# Get ip address to use for this node
+NODE_IP=
+echo -n "Enter the ipaddress of this node > "
+read NODE_IP
+
 # Turn off firewall
 systemctl stop firewalld
 systemctl disable firewalld
 
 # Add hostname to local dns
 echo "127.0.0.1" $HOSTNAME >> /etc/hosts
+echo "127.0.0.1" $NODE_IP >> /etc/hosts
 
 # Turn off swap
 swapoff -a
@@ -42,6 +48,9 @@ net.bridge.bridge-nf-call-iptables = 1
 EOF
 
 sysctl --system
+
+# Set the Ip of this node to kubelet config
+echo "KUBELET_EXTRA_ARGS=--node-ip=$NODE_IP" > /etc/sysconfig/kubelet
 
 # Manaully make the following changes
 echo "nano /etc/fstab and comment out the line that causes swap. Example #/root/swap"
