@@ -18,7 +18,7 @@ swapoff -a
 #yum -y install docker net-tools nano
 yum -y install yum-utils device-mapper-persistent-data lvm2 net-tools nano
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-yum -y install docker-ce
+yum -y install docker-ce-18.06.1.ce-3.el7
 systemctl enable docker
 systemctl start docker
 
