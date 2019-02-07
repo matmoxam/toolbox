@@ -14,7 +14,10 @@ echo "127.0.0.1" $HOSTNAME >> /etc/hosts
 swapoff -a
 
 # Install docker
-yum -y install docker net-tools nano
+#yum -y install docker net-tools nano
+yum -y install net-tools nano yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum -y install docker-ce
 systemctl enable docker
 systemctl start docker
 
