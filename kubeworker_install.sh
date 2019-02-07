@@ -9,13 +9,16 @@ systemctl disable firewalld
 
 # Add hostname to local dns
 echo "127.0.0.1" $HOSTNAME >> /etc/hosts
-echo "127.0.0.1" $NODE_IP >> /etc/hosts
+#echo "127.0.0.1" $NODE_IP >> /etc/hosts
 
 # Turn off swap
 swapoff -a
 
 # Install docker
-yum -y install docker net-tools nano
+#yum -y install docker net-tools nano
+yum -y install yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum -y install docker-ce
 systemctl enable docker
 systemctl start docker
 
