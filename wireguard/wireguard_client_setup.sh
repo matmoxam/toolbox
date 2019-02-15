@@ -1,61 +1,49 @@
 #!/bin/bash
 
-# Get server config values
-SERVER_PORT=`cat /etc/wireguard/server_port.txt`
-SERVER_VPN_IP=`cat /etc/wireguard/server_pub_ip.txt`
-SERVER_PUBLIC_IP=`cat /etc/wireguard/endpoint.txt`
-SERVER_PUBKEY=`cat /etc/wireguard/publickey`
-typeset -i NUM_CLIENTS=`cat /etc/wireguard/num_peers.txt`
-let "NUM_CLIENTS++"
-
-
-SERVER_VPN_IP_CUT=${SERVER_VPN_IP%?}
-CLIENT_VPN_IP=$SERVER_VPN_IP_CUT$NUM_CLIENTS
-echo "Client IP will be: " $CLIENT_VPN_IP
-
-CLIENT=
-echo -n "Enter name of client to add > "
-read CLIENT
-
-# Check if client already exists 
-if [ -d "/etc/wireguard/peers/$CLIENT" ]; then
-  echo "The client $CLIENT already exists. Please rerun and use a different client name..."
+if [ -d "/etc/wireguard" ]; then
+  echo "The wireguard directory (/etc/wireguard/) already exists... Please cleanup previous configurations first..."
   exit 1
 fi
 
-echo "Creating new configs for $CLIENT ..."
-mkdir /etc/wireguard/peers/$CLIENT
-cd /etc/wireguard/peers/$CLIENT
+# Install all needed binaries for centos7
+curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
+#yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+#yum -y install epel-release dkms wireguard-dkms wireguard-tools
+yum -y install wget
 
-# Generate the private and public keys for the client
-umask 077
-wg genkey | tee privatekey | wg pubkey > publickey
-PRIVKEY=`cat privatekey`
-PUBKEY=`cat publickey`
-echo "$PRIVKEY"
-echo "$PUBKEY"
+mkdir /opt/wireguard
+cd /opt/wireguard
 
-# Create the wireguard VPN client config file
-tee -a /etc/wireguard/peers/$CLIENT/wg0.conf << END
-[Interface]
-Address = $CLIENT_VPN_IP/24
-PrivateKey = $PRIVKEY
-ListenPort = $SERVER_PORT
-DNS = $SERVER_VPN_IP
+KERNEL_VER="$(uname -r)"
+wget http://ftp.riken.jp/Linux/scientific/7.0/x86_64/updates/security/kernel-devel-$KERNEL_VER.rpm
+wget http://ftp.riken.jp/Linux/scientific/7.0/x86_64/updates/security/kernel-headers-$KERNEL_VER.rpm
+yum -y install epel-release nano wget gcc
+yum -y install libmnl-devel elfutils-libelf-devel pkg-config @development-tools
+yum -y install kernel-devel-$KERNEL_VER.rpm
+yum -y install kernel-headers-$KERNEL_VER.rpm
+yum -y install dkms wireguard-dkms wireguard-tools
+wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190123.tar.xz
+tar -xvf /opt/wireguard/WireGuard-0.0.20190123.tar.xz
+cd /opt/wireguard/WireGuard-0.0.20190123/src
+make
+make install
 
-[PEER]
-PublicKey = $SERVER_PUBKEY
-AllowedIPs = 0.0.0.0/0
-Endpoint = $SERVER_PUBLIC_IP:$SERVER_PORT
-PersistentKeepalive = 21  
-END
+# Install resolverconf for dns
+cd /etc/yum.repos.d
+wget https://copr.fedorainfracloud.org/coprs/macieks/openresolv/repo/epel-7/macieks-openresolv-epel-7.repo
+yum -y update
+yum -y install openresolv traceroute
 
-# Add this client to the server
-wg set wg0 peer $PUBKEY allowed-ips $CLIENT_VPN_IP/32
+systemctl daemon-reload
 
-# Save server config
-wg-quick save wg0
-
-# Increase the counter for number of added clients
-echo "Incrementing total client count to $NUM_CLIENTS"
-echo "$NUM_CLIENTS" > /etc/wireguard/num_peers.txt
+#cp wg0.conf /etc/wireguard/wg0.conf
+systemctl enable wg-quick@wg0.service
+mkdir /etc/wireguard
+     
+if [ -f /etc/wireguard/wg0.conf ]; then  
+  # Auto start and enable wiregaurd VPN server
+  systemctl start wg-quick@wg0.service  
+else
+   echo "/etc/wireguard/wg0.conf does not exist. Get this file from the VPN server..."
+   exit 1
+fi
