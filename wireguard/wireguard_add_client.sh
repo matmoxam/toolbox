@@ -53,6 +53,7 @@ END
 # Create the wireguard VPN client service file
 tee -a /etc/wireguard/peers/$CLIENT/wireguard.service << END
 # Place file at: /etc/systemd/system/wireguard.service
+# Run systemctl daemon-reload
 [Unit]
 Description = Wireguard Client Service
 After = network.target
