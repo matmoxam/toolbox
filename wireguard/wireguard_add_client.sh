@@ -38,16 +38,40 @@ echo "$PUBKEY"
 # Create the wireguard VPN client config file
 tee -a /etc/wireguard/peers/$CLIENT/wg0.conf << END
 [Interface]
-Address = $CLIENT_VPN_IP/24
+#Address = $CLIENT_VPN_IP/24
 PrivateKey = $PRIVKEY
 ListenPort = $SERVER_PORT
-DNS = $SERVER_VPN_IP
+#DNS = $SERVER_VPN_IP
 
 [PEER]
 PublicKey = $SERVER_PUBKEY
 AllowedIPs = 0.0.0.0/0
 Endpoint = $SERVER_PUBLIC_IP:$SERVER_PORT
 PersistentKeepalive = 21  
+END
+
+# Create the wireguard VPN client service file
+tee -a /etc/wireguard/peers/$CLIENT/wireguard.service << END
+# Place file at: /etc/systemd/system/wireguard.service
+[Unit]
+Description = Wireguard Client Service
+After = network.target
+
+[Service]
+type=oneshot
+PIDFile = /run/wireguard_client/wireguard_client.pid
+User = root
+Group = root
+WorkingDirectory = /etc/wireguard
+ExecStartPre = ip link add dev wg0 type wireguard
+ExecStartPre = ip addr add $CLIENT_VPN_IP/24 dev wg0
+ExecStartPre = wg addconf wg0 /etc/wireguard/wg0.conf
+ExecStart = ip link set wg0 up
+ExecStartPost = ping -c2 10.7.0.1
+ExecStop = ip link del dev wg0
+
+[Install]
+WantedBy = multi-user.target 
 END
 
 # Add this client to the server
