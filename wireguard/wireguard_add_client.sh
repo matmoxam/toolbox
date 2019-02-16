@@ -50,6 +50,14 @@ Endpoint = $SERVER_PUBLIC_IP:$SERVER_PORT
 PersistentKeepalive = 21  
 END
 
+# Create the wireguard VPN client up file
+tee -a /etc/wireguard/peers/$CLIENT/wg-up.sh << END
+ip link add dev wg0 type wireguard
+ip addr add $CLIENT_VPN_IP/24 dev wg0
+wg addconf wg0 /etc/wireguard/wg0.conf
+ip link set wg0 up
+END
+
 # Create the wireguard VPN client service file
 tee -a /etc/wireguard/peers/$CLIENT/wireguard.service << END
 # Place file at: /etc/systemd/system/wireguard.service
@@ -64,12 +72,9 @@ PIDFile = /run/wireguard_client/wireguard_client.pid
 User = root
 Group = root
 WorkingDirectory = /etc/wireguard
-ExecStartPre = ip link add dev wg0 type wireguard
-ExecStartPre = ip addr add $CLIENT_VPN_IP/24 dev wg0
-ExecStartPre = wg addconf wg0 /etc/wireguard/wg0.conf
-ExecStart = ip link set wg0 up
+ExecStart = /etc/wireguard/wg-up.sh
 ExecStartPost = ping -c2 10.7.0.1
-ExecStop = ip link del dev wg0
+ExecStop = /sbin/ip link del dev wg0
 
 [Install]
 WantedBy = multi-user.target 
