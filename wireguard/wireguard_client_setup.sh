@@ -5,6 +5,10 @@ if [ -d "/etc/wireguard" ]; then
   exit 1
 fi
 
+CLIENT_VPN_IP=
+echo -n "Enter the VPN IP address this client will use. eg. 10.7.0.N > "
+read CLIENT_VPN_IP
+
 # Install all needed binaries for centos7
 curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
 yum -y install epel-release nano wget gcc
