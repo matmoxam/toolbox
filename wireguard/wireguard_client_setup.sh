@@ -31,7 +31,40 @@ wget https://copr.fedorainfracloud.org/coprs/macieks/openresolv/repo/epel-7/maci
 yum -y update
 yum -y install openresolv traceroute
 
-systemctl daemon-reload
+mkdir /etc/wireguard
 
-mkdir /etc/wireguard   
+# Create the wireguard VPN client up file
+#tee -a /etc/wireguard/wg-up.sh << END
+#/sbin/ip link add dev wg0 type wireguard
+#/sbin/ip addr add $CLIENT_VPN_IP/24 dev wg0
+#/bin/wg addconf wg0 /etc/wireguard/wg0.conf
+#/sbin/ip link set wg0 up
+#END
+
+# Create the wireguard VPN client service file
+tee -a /etc/systemd/system/wireguard.service << END
+# Place file at: /etc/systemd/system/wireguard.service
+# Run systemctl daemon-reload
+[Unit]
+Description = Wireguard Client Service
+After = network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory = /etc/wireguard
+ExecStartPre = /sbin/ip link add dev wg0 type wireguard
+ExecStartPre = /sbin/ip addr add $CLIENT_VPN_IP/24 dev wg0
+ExecStartPre = /bin/wg addconf wg0 /etc/wireguard/wg0.conf
+ExecStart = /sbin/ip link set wg0 up
+ExecStartPost = ping -c2 10.7.0.1
+ExecStop = /sbin/ip link del dev wg0
+
+[Install]
+WantedBy = multi-user.target 
+END
+
+systemctl daemon-reload
+systemctl enable wireguard.service
+
 
