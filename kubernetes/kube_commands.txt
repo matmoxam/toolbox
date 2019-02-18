@@ -23,3 +23,6 @@ data:
 
 # Install nginx ingress controller
 https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/installation.md
+
+# Common commands
+kubectl run hazelcast --image=hazelcast --port=5701
