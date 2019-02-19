@@ -26,3 +26,6 @@ https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/installation.md
 
 # Common commands
 kubectl run hazelcast --image=hazelcast --port=5701
+
+namespace wont delete solution:
+https://stackoverflow.com/questions/52954174/kubernetes-namespaces-stuck-in-terminating-status
