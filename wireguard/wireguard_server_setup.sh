@@ -20,9 +20,9 @@ mkdir /opt/wireguard
 cd /opt/wireguard
 
 KERNEL_VER="$(uname -r)"
+yum -y install epel-release nano wget gcc
 wget http://ftp.riken.jp/Linux/scientific/7.0/x86_64/updates/security/kernel-devel-$KERNEL_VER.rpm
 wget http://ftp.riken.jp/Linux/scientific/7.0/x86_64/updates/security/kernel-headers-$KERNEL_VER.rpm
-yum -y install epel-release nano wget gcc
 yum -y install libmnl-devel elfutils-libelf-devel pkg-config @development-tools
 yum -y install kernel-devel-$KERNEL_VER.rpm
 yum -y install kernel-headers-$KERNEL_VER.rpm
