@@ -55,8 +55,8 @@ echo "KUBELET_EXTRA_ARGS=--node-ip=$NODE_IP" > /etc/sysconfig/kubelet
 
 # Install all kubernetes containers via kubeadm and set kubernetes subnet
 #kubeadm init --pod-network-cidr=10.244.0.0/16 > kubeadm_init.log
-#kubeadm init --apiserver-advertise-address=0.0.0.0 --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors all
-kubeadm init --apiserver-advertise-address=$NODE_IP --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU
+#kubeadm init --apiserver-advertise-address=$NODE_IP --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU
+kubeadm init --apiserver-advertise-address=$NODE_IP --ignore-preflight-errors=NumCPU
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
@@ -67,12 +67,12 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 #KUBECONFIG=/etc/kubernetes/admin.conf kubectl apply -f https://raw.githubusercontent.com/cloudnativelabs/kube-router/master/daemonset/kubeadm-kuberouter.yaml
 
 # Install metallb, traefik ingress controller and cert-manager
-kubectl apply -f https://raw.githubusercontent.com/matmoxam/toolbox/master/kubernetes/metallb_config.yml
-kubectl apply -f https://raw.githubusercontent.com/matmoxam/toolbox/master/kubernetes/traefik-kube-install.yml
-kubectl create namespace cert-manager
-kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
-kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.6/deploy/manifests/00-crds.yaml
-kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.6/deploy/manifests/cert-manager.yaml
+#kubectl apply -f https://raw.githubusercontent.com/matmoxam/toolbox/master/kubernetes/metallb_config.yml
+#kubectl apply -f https://raw.githubusercontent.com/matmoxam/toolbox/master/kubernetes/traefik-kube-install.yml
+#kubectl create namespace cert-manager
+#kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+#kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.6/deploy/manifests/00-crds.yaml
+#kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.6/deploy/manifests/cert-manager.yaml
 
 kubectl get nodes
 
