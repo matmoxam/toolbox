@@ -55,8 +55,8 @@ echo "KUBELET_EXTRA_ARGS=--node-ip=$NODE_IP" > /etc/sysconfig/kubelet
 
 # Install all kubernetes containers via kubeadm and set kubernetes subnet
 #kubeadm init --pod-network-cidr=10.244.0.0/16 > kubeadm_init.log
-#kubeadm init --apiserver-advertise-address=$NODE_IP --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU
-kubeadm init --apiserver-advertise-address=$NODE_IP --ignore-preflight-errors=NumCPU
+kubeadm init --apiserver-advertise-address=$NODE_IP --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU
+#kubeadm init --apiserver-advertise-address=$NODE_IP --ignore-preflight-errors=NumCPU
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
