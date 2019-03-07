@@ -150,7 +150,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/preserve-host: "true"
     ingress.kubernetes.io/ssl-redirect: "true"
-    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
     certmanager.k8s.io/acme-challenge-type: http01
 spec:
   rules:
