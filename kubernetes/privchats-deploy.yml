@@ -32,7 +32,7 @@ data:
 
     server {
         listen         80;
-        server_name    privchats.test;
+        server_name    privchats.com;
 
         location /static {
             alias /static/;     
