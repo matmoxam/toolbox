@@ -68,14 +68,6 @@ kubectl apply -f https://raw.githubusercontent.com/matmoxam/toolbox/master/kuber
 #ip route add 10.96.0.0/16 dev wg0 src $NODE_IP
 #KUBECONFIG=/etc/kubernetes/admin.conf kubectl apply -f https://raw.githubusercontent.com/cloudnativelabs/kube-router/master/daemonset/kubeadm-kuberouter.yaml
 
-# Install metallb, traefik ingress controller and cert-manager
-#kubectl apply -f https://raw.githubusercontent.com/matmoxam/toolbox/master/kubernetes/metallb_config.yml
-#kubectl apply -f https://raw.githubusercontent.com/matmoxam/toolbox/master/kubernetes/traefik-kube-install.yml
-#kubectl create namespace cert-manager
-#kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
-#kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.6/deploy/manifests/00-crds.yaml
-#kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.6/deploy/manifests/cert-manager.yaml
-
 kubectl get nodes
 
 # Manaully make the following changes
