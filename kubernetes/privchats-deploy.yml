@@ -32,7 +32,7 @@ data:
     server {
         listen         80;
         server_name    privchats.com;
-        return         301 www.$server_name$request_uri;
+        return         301 https://www.$server_name$request_uri;
     }
     
 
