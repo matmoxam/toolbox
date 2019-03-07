@@ -167,8 +167,15 @@ spec:
         backend:
           serviceName: privchats-svc
           servicePort: 80
+  - host: www.privchats.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: privchats-svc
+          servicePort: 80
   tls:
     - secretName: privchats-tls-cert
       hosts:
         - privchats.com
-    
+        - www.privchats.com
