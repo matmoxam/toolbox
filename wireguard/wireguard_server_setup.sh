@@ -20,9 +20,6 @@ mkdir /opt/wireguard
 cd /opt/wireguard
 
 KERNEL_VER="$(uname -r)"
-if [[ $KERNEL_VER != *"x86_64"* ]]; then
-  KERNEL_VER=3.10.0-862.6.3.el7.x86_64
-fi
 yum -y install epel-release nano wget gcc
 wget http://ftp.riken.jp/Linux/scientific/7.0/x86_64/updates/security/kernel-devel-$KERNEL_VER.rpm
 wget http://ftp.riken.jp/Linux/scientific/7.0/x86_64/updates/security/kernel-headers-$KERNEL_VER.rpm
