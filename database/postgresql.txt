@@ -1,0 +1,6 @@
+CREATE DATABASE yourdbname;
+CREATE USER youruser WITH ENCRYPTED PASSWORD 'yourpass';
+GRANT ALL PRIVILEGES ON DATABASE yourdbname TO youruser;
+
+kubectl -n w-system exec -it wpodname -- psql -U postgres -d dbname -f file_04102019.pgsql
+kubectl -n w-system cp file_04102019.pgsql w-system/wpodname:/
