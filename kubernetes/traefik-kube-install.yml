@@ -92,10 +92,11 @@ spec:
         - --entrypoints=Name:http Address::80
 
 ---
+# Change the type to LoadBalancer if using LoadBalancers
 kind: Service
 apiVersion: v1
 metadata:
-  name: traefik-ingress-service
+  name: traefik-ingress-service  
   namespace: traefik-system
 spec:
   selector:
