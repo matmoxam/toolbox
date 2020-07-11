@@ -24,4 +24,4 @@ systemctl enable --now kubelet
 
 kubeadm init --apiserver-advertise-address=10.7.0.4 --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU
 
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+#kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
